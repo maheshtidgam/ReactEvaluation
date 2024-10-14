@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JOB POST</title>
+
+    <style>
+      #box {
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        background-color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    // Your Greeting component code will go here
+    const App = () => {
+      const [jobPost, setJobPost] = React.useState({
+        company: "",
+        city: "",
+        location: "",
+        role: "",
+        level: "",
+        position: "",
+        language: "",
+        contract: "",
+        postedAt: "",
+      });
+
+      const [isJobListVisible, setIsJobListVisible] = React.useState(false);
+      const [jobList, setJobList] = React.useState([]);
+
+      console.log("===", jobPost);
+
+      const handleSubmit = (event) => {
+        event.preventDefault();
+        if (
+          jobPost.company &&
+          jobPost.city &&
+          jobPost.location &&
+          jobPost.role &&
+          jobPost.level &&
+          jobPost.position &&
+          jobPost.language &&
+          jobPost.contract &&
+          jobPost.postedAt
+        ) {
+          let jobPosts = JSON.parse(localStorage.getItem("jobPosts")) || [];
+          jobPosts.push(jobPost);
+          localStorage.setItem("jobPosts", JSON.stringify(jobPosts));
+        }
+      };
+      return (
+        <>
+          <div>
+            <div style={{ width: "80%", textAlign: "end", margin: "auto" }}>
+              <button
+                style={{ padding: "10px", cursor: "pointer" }}
+                onClick={() => {
+                  setIsJobListVisible(!isJobListVisible),
+                    setJobList(JSON.parse(localStorage.getItem("jobPosts")));
+                }}
+              >
+                Fetch Listings
+              </button>
+            </div>
+
+            <div
+              style={{
+                width: "40%",
+                textAlign: "center",
+                margin: "auto",
+                padding: "20px",
+                borderRadius: "10px",
+                backgroundColor: "lightblue",
+              }}
+            >
+              <h1>Post a Job</h1>
+              <form
+                style={{
+                  display: "flex",
+                  textAlign: "start",
+                  flexDirection: "column",
+                  gap: "10px",
+                }}
+                onSubmit={handleSubmit}
+              >
+                <label>Company Name</label>
+                <input
+                  type="text"
+                  placeholder="Enter Company Name"
+                  value={jobPost.company}
+                  onChange={(event) =>
+                    setJobPost({ ...jobPost, company: event.target.value })
+                  }
+                />
+                <label>City</label>
+                <input
+                  type="text"
+                  placeholder="Enter City"
+                  value={jobPost.city}
+                  onChange={(event) =>
+                    setJobPost({ ...jobPost, city: event.target.value })
+                  }
+                />
+                <label>Location</label>
+                <input
+                  type="text"
+                  placeholder="Enter Location"
+                  value={jobPost.location}
+                  onChange={(event) =>
+                    setJobPost({ ...jobPost, location: event.target.value })
+                  }
+                />
+                <label>Role</label>
+                <select
+                  type="text"
+                  placeholder="Enter Role"
+                  value={jobPost.role}
+                  onChange={(event) =>
+                    setJobPost({ ...jobPost, role: event.target.value })
+                  }
+                >
+                  <option value="">Select Role</option>
+                  <option value="Frontend">Frontend</option>
+                  <option value="Backend">Backend</option>
+                  <option value="Fullstack">Fullstack</option>
+                </select>
+                <label>Level</label>
+                <select
+                  type="text"
+                  placeholder="Enter Level"
+                  value={jobPost.level}
+                  onChange={(event) =>
+                    setJobPost({ ...jobPost, level: event.target.value })
+                  }
+                >
+                  <option value="">Select Level</option>
+                  <option value="Intern">Intern</option>
+                  <option value="Junior">Junior</option>
+                  <option value="Mid-Senior">Mid-Senior</option>
+                  <option value="Director">Director</option>
+                </select>
+                <label>Position</label>
+                <select
+                  type="text"
+                  placeholder="Enter Position"
+                  value={jobPost.position}
+                  onChange={(event) =>
+                    setJobPost({ ...jobPost, position: event.target.value })
+                  }
+                >
+                  <option value="">Select Position</option>
+                  <option value="Backend Developer">Backend Developer</option>
+                  <option value="Junior Frontend Developer">
+                    Junior Frontend Developer
+                  </option>
+                  <option value="Mid-Senior Frontend Developer">
+                    Mid-Senior Frontend Developer
+                  </option>
+                </select>
+                <label>Programming Language</label>
+                <select
+                  type="text"
+                  placeholder="Enter Programming Language"
+                  value={jobPost.language}
+                  onChange={(event) =>
+                    setJobPost({
+                      ...jobPost,
+                      language: event.target.value,
+                    })
+                  }
+                >
+                  <option value="">Select Language</option>
+                  <option value="Javascript">JavaScript</option>
+                  <option value="Python">Python</option>
+                  <option value="Java">Java</option>
+                  <option value="C++">C++</option>
+                  <option value="Ruby">Ruby</option>
+                </select>
+                <label>Contract Type</label>
+                <select
+                  type="text"
+                  placeholder="Enter Contract Type"
+                  value={jobPost.contract}
+                  onChange={(event) =>
+                    setJobPost({ ...jobPost, contract: event.target.value })
+                  }
+                >
+                  <option value="">Select Contract Type</option>
+                  <option value="Full Time">Full Time</option>
+                  <option value="Part Time">Part Time</option>
+                  <option value="Internship">Internship</option>
+                </select>
+                <label>Date</label>
+                <input
+                  type="date"
+                  placeholder="Enter Date"
+                  value={jobPost.postedAt}
+                  onChange={(event) =>
+                    setJobPost({ ...jobPost, postedAt: event.target.value })
+                  }
+                />
+                <button
+                  style={{ padding: "10px", cursor: "pointer" }}
+                  type="submit"
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
+
+            <div
+              style={{
+                width: "80%",
+                textAlign: "center",
+                margin: "auto",
+                padding: "20px",
+                backgroundColor: "lightblue",
+              }}
+            >
+              <h1>Job Listing</h1>
+
+              {isJobListVisible && (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "20px",
+                    padding: "10px",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  
+                  }}
+                >
+                  {jobList?.length > 0 ? (
+                    jobList.map((job, index) => (
+                      <>
+                        <div
+                          id="box"
+                          key={index}
+                          style={{
+                            width: "80%",
+                            margin:0,
+
+                            gap: "10px",
+                         padding: "10px",
+                            border: "1px solid red",
+                         
+                          }}
+                        >
+                          <div
+                            style={{
+                              textAlign: "left",
+                              paddingLeft: "30px",
+                              fontSize: "20px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            <p>{job.company}</p>
+                          </div>
+
+                          <div
+                            id="mid_container"
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap:"300px",
+                             
+                              margin:"0",
+                              fontWeight: "bold",
+
+                              padding: "10px",
+                            }}
+                          >
+                            <div>
+                              <p>{job.position}</p>
+                            </div>
+
+                            <div
+                              style={{
+                                display: "flex",
+                                gap: "10px",
+
+                                padding: "10px",
+                              }}
+                            >
+                              <div>
+                                <p>{job.role}</p>
+                              </div>
+                              <div>
+                                <p>{job.level}</p>
+                              </div>
+                              <div>
+                                <p>{job.language}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div  style={{
+                                display: "flex",
+                                gap: "10px",
+
+                                padding: "10px",
+                              }}>
+                            <div>
+                              <p>{job.postedAt}</p>
+                            </div>
+                            <div>
+                              <p>{job.contract}</p>
+                            </div>
+                            <div>
+                              <p>{job.city}</p>
+                            </div>
+                            <div>
+                              <p>{job.location}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ))
+                  ) : (
+                    <>
+                      <p>No Jobs Available</p>
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </>
+      );
+    };
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</html>
